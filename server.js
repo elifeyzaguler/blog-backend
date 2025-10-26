@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
+const postRoutes = require("./routes/postRoutes");
 const app = express();
 const PORT = 3000;
 
@@ -23,7 +24,8 @@ const connectDB = async () => {
   }
 };
 
-app.use("/api/auth", authRoutes);
+app.use("/auth", authRoutes);
+app.use("/post", postRoutes);
 app.get("/", (req, res) => {
   res.send("Blog app is running and connected to DB!");
 });
