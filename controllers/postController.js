@@ -19,3 +19,32 @@ exports.createPost = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+exports.getAllPosts = async (req, res) => {
+  try {
+    const postList = await Post.find();
+    if (!postList || postList.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Error fetching posts" });
+    }
+    res.status(200).json({ success: true, data: postList });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+exports.getPostByAuthor = async (req, res) => {
+  try {
+    const postList = await Post.find({ author: req.params.username });
+    if (!postList || postList.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Error fetching posts" });
+    }
+    res.status(200).json({ success: true, data: postList });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
